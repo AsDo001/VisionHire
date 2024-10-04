@@ -1,15 +1,22 @@
 import Login from '../views/Login.vue'
 import Registration from "../views/Registration.vue";
-import HomePage from "@/views/HomePage.vue";
+import DashBoard from "@/views/DashBoard.vue";
+import Home from '../views/Home.vue';	
 
 import {isAuthenticated, logout } from "@/modules/auth";
 import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
 	{
-		path: '/',
+		path: "/",
 		name: 'home',
-		component: HomePage,
+        component: Home,
+		meta: { requiresAuth: false}
+	},
+	{
+		path: '/dashboard',
+		name: 'dashboard',
+		component: DashBoard,
 		meta: { requiresAuth: true}
 	},
 	{
