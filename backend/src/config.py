@@ -1,10 +1,11 @@
-from environs import Env
 from pathlib import Path
+
+from environs import Env
 
 env = Env()
 env.read_env()
 
-PROJECT_ROOT: Path = Path(__file__).resolve().parent.parent.parent
+PROJECT_ROOT: Path = Path(__file__).resolve().parent.parent
 
 JWT_TOKEN_SECRET = env.str("JWT_TOKEN_SECRET")
 JWT_ACCESS_TOKEN_EXPIRE_MINUTES = env.int("JWT_ACCESS_TOKEN_EXPIRES")
@@ -19,4 +20,6 @@ DB_PORT = env.int("DB_PORT")
 DB_USERNAME = env.str("DB_USERNAME")
 DB_PASSWORD = env.str("DB_PASSWORD")
 DB_NAME = env.str("DB_NAME")
-DB_URL: str = f"postgresql+asyncpg://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+DB_URL: str = (
+    f"postgresql+asyncpg://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+)

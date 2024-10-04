@@ -1,12 +1,16 @@
-from loguru import logger
-from fastapi import FastAPI
 from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
+from loguru import logger
+from sqladmin import Admin
 from starlette.middleware.cors import CORSMiddleware
 
 import src.config as cfg
-from src.utils.oauth2_utils import OAuth2Utils
 from src.database.crud import CRUD
 from src.database.db import DatabaseManager
+from src.database.sqladmin_views import all_views
+from src.utils.oauth2_utils import OAuth2Utils
+from src.utils.sqladmin_auth import AdminAuth
 
 
 @asynccontextmanager
@@ -16,16 +20,27 @@ async def lifespan(_):
 
 
 app: FastAPI = FastAPI(lifespan=lifespan, debug=True)
-db = CRUD(DatabaseManager(cfg.DB_URL))
-
+db_manager = DatabaseManager(cfg.DB_URL)
+db = CRUD(db_manager)
 oauth2: OAuth2Utils = OAuth2Utils(
     db=db,
     jwt_token_secret=cfg.JWT_TOKEN_SECRET,
     access_token_exp=cfg.JWT_ACCESS_TOKEN_EXPIRE_MINUTES,
     refresh_token_exp=cfg.JWT_REFRESH_TOKEN_EXPIRE_MINUTES,
     jwt_algorithm=cfg.JWT_ALGORITHM,
-    token_url="/api/auth/login"
+    token_url="/api/auth/login",
 )
+
+##==> Admin panel
+#########################################
+admin = Admin(
+    app,
+    db_manager.engine,
+    authentication_backend=AdminAuth(cfg.JWT_TOKEN_SECRET, db, oauth2),
+)
+for view in all_views:
+    admin.add_view(view)
+#########################################
 
 app.add_middleware(
     CORSMiddleware,
