@@ -3,9 +3,11 @@ import { logout } from "@/modules/auth";
 import { getAccountInfo } from "@/modules/api";
 import { onMounted, ref } from "vue";
 import Header from "@/components/Header.vue";
-import Modal from '@/components/Modal.vue'
-
-const modalRef = ref(null)
+import Modal from "@/components/Modal.vue";
+import List from "@/components/List.vue";
+import { candidates } from "@/stubs/Candidats.stubs";
+import { todos } from "@/stubs/Todos.stubs";
+const modalRef = ref(null);
 const name = ref("");
 
 onMounted(async () => {
@@ -16,17 +18,14 @@ onMounted(async () => {
     logout();
   }
 });
-
 </script>
 
 <template>
-	<Header/>
+  <Header page="main" />
   <div class="home">
-
-    <p class="title">Welcome to VisionForge, {{ name }}</p>
-    <p class="description">You have been successfully authorized</p>
-    <button @click="logout" class="logout-btn">logout</button>
-    <button @click="modalRef.openModal">открыть модалку</button>
+    <List type="cand" title="Кандидаты" :list="candidates" />
+    <List type="todo" title="TODO" :list="todos" />
+    <button @click="modalRef.openModal" v-if="false">открыть модалку</button>
     <Modal ref="modalRef">
       <h2>модалка</h2>
     </Modal>
@@ -35,11 +34,11 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .home {
+  padding: 0 5%;
+  margin: 150px 0 300px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  height: 100vh;
+  justify-content: space-between;
+  min-height: 100vh;
   width: 100%;
 
   .title {

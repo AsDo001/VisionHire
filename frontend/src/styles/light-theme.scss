@@ -1,7 +1,9 @@
 @mixin light-theme {
   --bg: #eff1f5;
-  --sbg: #bcc0cc;
-  --light-sbg: #ccd0da;
+
+  --sbg-dark: #D9D9D9;
+  --sbg: #E7E9EE;
+  --sbg-light: #eff1f5;
 
   --text: #7c7c7c;
   --hinted-text: #ffffff;

@@ -1,4 +1,3 @@
-<!-- Modal.vue -->
 <template>
   <div class="modal" v-if="visible" @click.self="closeModal">
     <div class="modal__content">
@@ -28,7 +27,7 @@ defineExpose({
 });
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .modal {
   position: fixed;
   top: 0;
