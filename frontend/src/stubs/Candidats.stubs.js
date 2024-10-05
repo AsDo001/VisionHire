@@ -1,7 +1,7 @@
 export const candidates = [
     {
       id: 1,
-      name: 'Дима ПРонин',
+      name: 'Дима Пронин',
       description: 'Software Engineer',
       status: 'appointed',
     },

@@ -44,13 +44,14 @@
                   : item.description
               }}
             </div>
-            <div class="text_desc">{{ item.author }}</div>
-            <!-- здесь еще нужно подтягивать от кого сделана задача-->
+            <div :class="`text_desc ${item.role === 'd' && 'colored'}`">
+              {{ item.author }}
+            </div>
           </div>
         </div>
         <div class="btns">
-          <button class="check"></button>
-          <button class="modal_btn"></button>
+          <button class="check"><Check /></button>
+          <button class="modal_btn"><Details /></button>
         </div>
       </div>
     </div>
@@ -78,6 +79,8 @@
 
 <script setup>
 import ArrowDown from "@/assets/svg/ArrowDown.vue";
+import Check from "@/assets/svg/Check.vue";
+import Details from "@/assets/svg/Details.vue";
 import Filter from "@/assets/svg/Filter.vue";
 import Profile from "@/assets/svg/Profile.vue";
 import Search from "@/assets/svg/Search.vue";
@@ -125,12 +128,13 @@ const maxPage = ref(6);
           background-color: var(--sbg);
           width: 400px;
           height: 50px;
+          outline-color: var(--lavander);
         }
         &_btn {
           position: absolute;
           background-color: var(--sbg);
           right: 15px;
-          top: 15px;
+          top: 12.5px;
           cursor: pointer;
           padding: 0;
         }
@@ -198,6 +202,7 @@ const maxPage = ref(6);
       }
       .btns {
         display: flex;
+        align-items: center;
         gap: 15px;
       }
     }
@@ -218,10 +223,13 @@ const maxPage = ref(6);
           }
           .profile {
             background: var(--bg-color);
+            height: 60px;
+            width: 60px;
+            padding: 0;
           }
           .state {
             position: relative;
-            padding: 5px 20px 5px 20px;
+            padding: 0 20px;
             background-color: var(--bg-color);
             border-radius: 10px;
             display: flex;
@@ -234,7 +242,10 @@ const maxPage = ref(6);
             }
             &_btn {
               background-color: var(--bg-color);
-
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              height: 60px;
               padding: 0;
               cursor: pointer;
             }
@@ -248,7 +259,12 @@ const maxPage = ref(6);
           .check {
             background: var(--sbg-dark);
             border-radius: 50px;
-            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            padding: 0;
             color: var(--lavander);
             &.active {
               background: var(--lavander);
@@ -256,6 +272,12 @@ const maxPage = ref(6);
             }
           }
           .modal_btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            padding: 0;
             background: var(--lavander);
           }
         }
