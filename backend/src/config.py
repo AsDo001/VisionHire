@@ -23,3 +23,8 @@ DB_NAME = env.str("DB_NAME")
 DB_URL: str = (
     f"postgresql+asyncpg://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
+
+SMTP_HOST = env.str("SMTP_HOST")
+SMTP_PORT = env.int("SMTP_PORT")
+EMAIL = env.str("EMAIL")
+EMAIL_PASSWORD = env.str("EMAIL_PASSWORD")

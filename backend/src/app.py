@@ -11,7 +11,7 @@ import src.config as cfg
 from src.api import account, auth
 from src.api.routers import protected, unprotected
 from src.loader import app
-
+from src.utils.mail import send_email_background
 
 def init_db():
     async def create_db():

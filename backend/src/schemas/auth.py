@@ -33,3 +33,10 @@ class IsAuthenticated:
 	user: Optional[User]
 	access_token: Optional[str]
 	refresh_token: Optional[str]
+
+
+@dataclass
+class ChangePassword:
+    old_password: str
+    new_password: str
+    confirm_password: str
