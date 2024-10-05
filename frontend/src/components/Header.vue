@@ -6,6 +6,12 @@ import useThemeStore from "@/store/theme";
 
 const themeStore = useThemeStore();
 
+const { page } = defineProps({
+  page: {
+    type: String,
+    default: "land",
+  },
+});
 </script>
 
 <template>
@@ -14,14 +20,18 @@ const themeStore = useThemeStore();
       <Logo />
     </div>
     <div class="btns">
-      <button class="btn green">
+      <button class="btn green" v-if="page === 'land'">
         <RouterLink class="link" to="/auth/login">Вход</RouterLink>
       </button>
-      <button class="btn lavander">
+      <button class="btn lavander" v-if="page === 'land'">
         <RouterLink class="link" to="/auth/registration"
           >Регистрация</RouterLink
         >
       </button>
+      <button class="btn lavander" v-if="page === 'main'">
+        <RouterLink class="link" to="/auth/registration">Профиль</RouterLink>
+      </button>
+
       <button class="btn red"><Language /></button>
       <button class="btn yellow" @click="themeStore.toggleTheme">
         <Sun />

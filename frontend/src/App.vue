@@ -20,8 +20,6 @@ const themeStore = useThemeStore();
 }
 :root {
   --lavander: #7287fd;
-  --hinted-text: #ffffff;
-
   --green: #39e9a7;
   --gradient: linear-gradient(to bottom right, #39e9a7, #7287fd);
   --red: #ff86aa;
