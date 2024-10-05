@@ -56,11 +56,15 @@
       </div>
     </div>
     <div class="pagination">
-      <button class="pagination_btn pagination_prev" v-if="maxPage !== 6">
+      <button
+        class="pagination_btn pagination_prev"
+        v-if="maxPage !== 6"
+        @click="maxPage--"
+      >
         <
       </button>
       <button
-        class="pagination_btn"
+        :class="`pagination_btn ${index + 1 === maxPage && 'colored'} `"
         v-for="(item, index) in list"
         :key="item.id"
       >
@@ -70,6 +74,7 @@
       <button
         class="pagination_btn pagination_next"
         v-if="maxPage !== list.length"
+        @click="maxPage++"
       >
         >
       </button>
