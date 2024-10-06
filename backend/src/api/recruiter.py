@@ -1,9 +1,9 @@
 from fastapi import HTTPException, Request
 from fastapi.responses import Response
-from src.loader import db
+from loader import db
 
-from ..database.models import User, Role
-from ..schemas.recruiter import CreateInterview, CreateVacancies
+from database.models import User, Role
+from schemas.recruiter import CreateInterview, CreateVacancies
 from .routers import protected
 
 

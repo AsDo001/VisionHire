@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from dataclasses import dataclass
 from typing import Optional
 
-from src.database.models import User
+from database.models import User
 
 
 class Register(BaseModel):

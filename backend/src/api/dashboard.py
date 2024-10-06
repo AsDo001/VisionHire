@@ -1,10 +1,10 @@
 from fastapi import HTTPException, Request
-from src.loader import db
+from loader import db
 from typing import List, Dict
 
-from ..database.models import User, Vacancy, Candidate, Role
+from database.models import User, Vacancy, Candidate, Role
 from .routers import protected
-from ..schemas.recruiter import CreateTask
+from schemas.recruiter import CreateTask
 
 
 @protected.post('/get_candidates')

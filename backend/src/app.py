@@ -7,10 +7,10 @@ from alembic.runtime.environment import EnvironmentContext
 from alembic.script import ScriptDirectory
 from loguru import logger
 
-import src.config as cfg
-from src.loader import app
-from src.api import account, auth, recruiter, dashboard
-from src.api.routers import protected, unprotected
+import config as cfg
+from loader import app
+from api import account, auth, recruiter, dashboard
+from api.routers import protected, unprotected
 
 
 def init_db():

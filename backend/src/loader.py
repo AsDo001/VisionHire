@@ -5,12 +5,12 @@ from loguru import logger
 from sqladmin import Admin
 from starlette.middleware.cors import CORSMiddleware
 
-import src.config as cfg
-from src.database.crud import CRUD
-from src.database.db import DatabaseManager
-from src.database.sqladmin_views import all_views
-from src.utils.oauth2_utils import OAuth2Utils
-from src.utils.sqladmin_auth import AdminAuth
+import config as cfg
+from database.crud import CRUD
+from database.db import DatabaseManager
+from database.sqladmin_views import all_views
+from utils.oauth2_utils import OAuth2Utils
+from utils.sqladmin_auth import AdminAuth
 
 
 

@@ -2,7 +2,7 @@ from typing import Callable
 from fastapi.routing import APIRoute
 from fastapi import APIRouter, Request, Response
 
-from src.loader import oauth2
+from loader import oauth2
 from .errors import credentials_exc
 
 

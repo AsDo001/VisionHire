@@ -3,10 +3,10 @@ from aiofiles import os
 from fastapi import Request
 from fastapi.responses import JSONResponse, FileResponse
 
-from src.utils.json_custom_encoder import JSONCustomEncoder
+from utils.json_custom_encoder import JSONCustomEncoder
 from .routers import protected
-import src.config as cfg
-from src.database.models import Role
+import config as cfg
+from database.models import Role
 
 
 @protected.post("/get_my_account_info")

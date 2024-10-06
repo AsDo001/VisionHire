@@ -3,10 +3,10 @@ from sqladmin.authentication import AuthenticationBackend
 from starlette.requests import Request
 from starlette.responses import RedirectResponse
 
-from src.database.crud import CRUD
-from src.database.models import Role
-from src.utils.oauth2_utils import OAuth2Utils
-import src.config as cfg
+from database.crud import CRUD
+from database.models import Role
+from utils.oauth2_utils import OAuth2Utils
+import config as cfg
 
 
 # TODO: Изменить логику аутентификации. Сделать через refresh токен.

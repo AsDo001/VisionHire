@@ -5,9 +5,9 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import jwt
 from passlib.context import CryptContext
 
-from src.api.errors import credentials_exc
-from src.database.crud import CRUD
-from src.schemas.auth import IsAuthenticated, UpdatedTokens
+from api.errors import credentials_exc
+from database.crud import CRUD
+from schemas.auth import IsAuthenticated, UpdatedTokens
 
 
 class OAuth2Utils:

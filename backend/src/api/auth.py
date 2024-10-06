@@ -2,10 +2,10 @@ from email_validator import EmailNotValidError, validate_email
 from fastapi import HTTPException, Request
 from fastapi.responses import Response
 
-from src.loader import db, oauth2
-from src.schemas.auth import ChangePassword, Login, Register, UpdatedTokens
+from loader import db, oauth2
+from schemas.auth import ChangePassword, Login, Register, UpdatedTokens
 
-from ..database.models import User
+from database.models import User
 from .errors import credentials_exc, login_data_exc, username_exits_exc
 from .routers import protected, unprotected
 
