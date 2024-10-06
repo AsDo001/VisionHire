@@ -2,7 +2,6 @@ import Login from '../views/Login.vue'
 import Registration from "../views/Registration.vue";
 import DashBoard from "@/views/DashBoard.vue";
 import Home from '../views/Home.vue';	
-
 import {isAuthenticated, logout } from "@/modules/auth";
 import { createRouter, createWebHistory } from 'vue-router';
 
@@ -30,7 +29,7 @@ const routes = [
 		name: 'registration',
 		component: Registration,
 		meta: { requiresAuth: false }
-	}
+	},
 ]
 
 export const router = createRouter({

@@ -52,7 +52,8 @@ function exit() {
 
       <div class="block">
         <button class="auth-btn" @click="register">Зарегистрироваться</button>
-        <button class="auth-btn exit" @click="exit">Выйти</button>
+        <div style="height: 5px;"></div>
+        <button class="auth-btn exit" @click="exit">На главную</button>
         <router-link to="/auth/login" class="another-way"
           >Уже есть аккаунт?</router-link
         >
@@ -96,7 +97,7 @@ function exit() {
 }
 
 .auth-container input {
-  background: var(--light-sbg);
+  background: var(--sbg-dark);
   width: 90%;
   height: 60px;
   border-radius: 15px;

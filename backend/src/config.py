@@ -6,6 +6,10 @@ env = Env()
 env.read_env()
 
 PROJECT_ROOT: Path = Path(__file__).resolve().parent.parent
+PROJECT_SRC = PROJECT_ROOT / "src"
+USERS_AVATARS = PROJECT_SRC / "avatars" / "users"
+DEFAULT_DIRECTOR_AVATAR = PROJECT_SRC / "avatars" / "director-avatar.png"
+DEFAULT_RECRUITER_AVATAR = PROJECT_SRC / "avatars" / "recruiter-avatar.png"
 
 JWT_TOKEN_SECRET = env.str("JWT_TOKEN_SECRET")
 JWT_ACCESS_TOKEN_EXPIRE_MINUTES = env.int("JWT_ACCESS_TOKEN_EXPIRES")
@@ -28,3 +32,6 @@ SMTP_HOST = env.str("SMTP_HOST")
 SMTP_PORT = env.int("SMTP_PORT")
 EMAIL = env.str("EMAIL")
 EMAIL_PASSWORD = env.str("EMAIL_PASSWORD")
+
+ADMIN_LOGIN = env.str("ADMIN_LOGIN")
+ADMIN_PASSWORD = env.str("ADMIN_PASSWORD")

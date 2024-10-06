@@ -39,7 +39,8 @@ class UsersCRUD:
             result = await session.execute(
                 select(User).where(User.username == username)
             )
-            return result.scalars().first()
+            user = result.scalars().first()
+            return user
 
     async def update_refresh_token_by_username(
         self, username: str, refresh_token: str
@@ -50,9 +51,15 @@ class UsersCRUD:
             user.refresh_token = refresh_token
             await session.commit()
 
-    async def update_password_by_username(self, username: str, hashed_password: str) -> None:
+    async def update_password_by_username(
+        self, username: str, hashed_password: str
+    ) -> None:
         async with self.db_manager.get_session() as session:
             user = await session.execute(select(User).where(User.username == username))
             user = user.scalar()
             user.hashed_password = hashed_password
             await session.commit()
+
+
+
+    # async def create_task()

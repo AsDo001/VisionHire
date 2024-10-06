@@ -13,13 +13,14 @@ from src.utils.oauth2_utils import OAuth2Utils
 from src.utils.sqladmin_auth import AdminAuth
 
 
+
 @asynccontextmanager
 async def lifespan(_):
     yield
     logger.info("Завершение работы сервера!")
 
-
 app: FastAPI = FastAPI(lifespan=lifespan, debug=True)
+
 db_manager = DatabaseManager(cfg.DB_URL)
 db = CRUD(db_manager)
 oauth2: OAuth2Utils = OAuth2Utils(

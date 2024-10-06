@@ -1,26 +1,122 @@
 export const candidates = [
-    {
-      id: 1,
-      name: 'Дима Пронин',
-      description: 'Software Engineer',
-      status: 'appointed',
-    },
-    {
-      id: 2,
-      name: 'Дима Яшин',
-      description: 'UI/UX Designer',
-      status: 'accepted', 
-    },
-    {
-      id: 3,
-      name: 'Ярик Пронин',
+  {
+    id: 1,
+    name: 'Дима Пронин',
+    description: 'Software Engineer',
+    status: 'appointed',
+  },
+  {
+    id: 2,
+    name: 'Дима Яшин',
+    description: 'UI/UX Designer',
+    status: 'accepted', 
+  },
+  {
+    id: 3,
+    name: 'Ярик Пронин',
+    description: 'Full-Stack Developer',
+    status: 'rejected',
+  },
+  {
+      id: 4,
+      name: 'Егор Пронин',
       description: 'Full-Stack Developer',
+      status: 'expected',
+  },
+  {
+      id: 5,
+      name: 'Анна Смирнова',
+      description: 'Data Scientist',
+      status: 'appointed',
+  },
+  {
+      id: 6,
+      name: 'Сергей Иванов',
+      description: 'DevOps Engineer',
+      status: 'accepted',
+  },
+  {
+      id: 7,
+      name: 'Ольга Кузнецова',
+      description: 'Product Manager',
       status: 'rejected',
-    },
-    {
-        id: 4,
-        name: 'Егор Пронин',
-        description: 'Full-Stack Developer',
-        status: 'expected',
-    }
-  ];
+  },
+  {
+      id: 8,
+      name: 'Иван Петров',
+      description: 'Backend Developer',
+      status: 'expected',
+  },
+  {
+      id: 9,
+      name: 'Мария Федорова',
+      description: 'Frontend Developer',
+      status: 'appointed',
+  },
+  {
+      id: 10,
+      name: 'Алексей Сидоров',
+      description: 'QA Engineer',
+      status: 'accepted',
+  },
+  {
+      id: 11,
+      name: 'Елена Васильева',
+      description: 'Business Analyst',
+      status: 'rejected',
+  },
+  {
+      id: 12,
+      name: 'Дмитрий Николаев',
+      description: 'Mobile Developer',
+      status: 'expected',
+  },
+  {
+      id: 13,
+      name: 'Татьяна Романова',
+      description: 'Graphic Designer',
+      status: 'appointed',
+  },
+  {
+      id: 14,
+      name: 'Андрей Григорьев',
+      description: 'System Administrator',
+      status: 'accepted',
+  },
+  {
+      id: 15,
+      name: 'Ксения Лебедева',
+      description: 'Content Writer',
+      status: 'rejected',
+  },
+  {
+      id: 16,
+      name: 'Николай Орлов',
+      description: 'Network Engineer',
+      status: 'expected',
+  },
+  {
+      id: 17,
+      name: 'Светлана Павлова',
+      description: 'SEO Specialist',
+      status: 'appointed',
+  },
+  {
+      id: 18,
+      name: 'Виктория Соколова',
+      description: 'Marketing Manager',
+      status: 'accepted',
+  },
+  {
+      id: 19,
+      name: 'Роман Ковалев',
+      description: 'Data Analyst',
+      status: 'rejected',
+  },
+  {
+      id: 20,
+      name: 'Анастасия Чернова',
+      description: 'Web Developer',
+      status: 'expected',
+  },
+];

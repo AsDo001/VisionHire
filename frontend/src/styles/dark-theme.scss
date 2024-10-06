@@ -1,11 +1,11 @@
 @mixin dark-theme {
-  --bg: #4c4f69;
-  
-  --sbg-dark: #eff1f5;
-  --sbg: #5c616f;
-  --sbg-light: #D9D9D9;
+	--bg: #1e1e2e;
 
-  --text: #c0bfbf;
-  --hinted-text: #ffffff;
-  --contrast: #ffffff;
+	--sbg-dark: #45475a;
+	--sbg: #313244;
+	--sbg-light: #45475a;
+
+	--text: #cdd6f4;
+	--hinted-text: #ffffff;
+	--contrast: #ffffff;
 }

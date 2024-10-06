@@ -7,8 +7,11 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@amcharts/amcharts5": "^5.10.5",
     "@vue/cli": "^5.0.8",
+    "apexcharts": "^3.54.0",
     "axios": "^1.7.7",
+    "chart.js": "^4.4.4",
     "core-js": "^3.8.3",
     "npx": "^10.2.2",
     "pinia": "^2.2.2",
@@ -16,6 +19,8 @@
     "sass-loader": "^16.0.2",
     "sweetalert2": "^11.6.13",
     "vue": "^3.4.37",
+    "vue-apexcharts": "^1.6.2",
+    "vue-chartjs": "^5.3.1",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
   },

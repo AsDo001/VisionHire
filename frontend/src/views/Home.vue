@@ -2,6 +2,9 @@
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import Arrow from "@/assets/svg/Arrow.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 </script>
 
 <template>
@@ -19,7 +22,7 @@ import Arrow from "@/assets/svg/Arrow.vue";
             упрощает процесс подбора персонала. Мы предоставляем удобные
             инструменты для визуализации данных и анализа эффективности.
           </p>
-          <button class="text_btn">Попробовать</button>
+          <button class="text_btn" @click="router.push('/dashboard')" style="cursor: pointer;">Попробовать</button>
         </div>
       </div>
       <div class="main_arrow">
@@ -266,12 +269,12 @@ import Arrow from "@/assets/svg/Arrow.vue";
 
 <style scoped lang="scss">
 .landing {
-  padding: 220px 5vw 0;
+
 
   .main {
     height: 700px;
     position: relative;
-    margin-bottom: 70px;
+    margin: 100px 0 70px;
     &_content {
       display: flex;
       height: 550px;

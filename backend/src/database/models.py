@@ -2,7 +2,7 @@ import enum
 from datetime import datetime
 from typing import Any
 
-from sqlalchemy import TIMESTAMP, Column, String, ForeignKey, Integer, TIMESTAMP, DATE
+from sqlalchemy import TIMESTAMP, Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.dialects.postgresql import ENUM as PgEnum
 from sqlalchemy.orm import relationship
 
@@ -12,7 +12,13 @@ from .db import Base
 class Role(enum.Enum):
     recruiter = "recruiter"
     director = "director"
-    admin = "admin"
+
+
+class CandidateStatus(enum.Enum):
+    expected = "expected"
+    appointed = "appointed"
+    accepted = "accepted"
+    rejected = "rejected"
 
 
 class User(Base):
@@ -27,7 +33,19 @@ class User(Base):
     )
     hashed_password = Column(String, nullable=False)
     refresh_token = Column(String, nullable=True)
-    created_at = Column(TIMESTAMP, nullable=False, unique=False, default=datetime.now)
+    created_at = Column(TIMESTAMP, nullable=False, default=datetime.now)
+
+    vacancies = relationship("Vacancy", back_populates="recruiter")
+    tasks_creator = relationship(
+        "Task", back_populates="creator", foreign_keys="Task.task_creator"
+    )
+    tasks_receiver = relationship(
+        "Task", back_populates="receiver", foreign_keys="Task.task_receiver"
+    )
+    interviews = relationship("Interview", back_populates="recruiter")
+
+    subordinate_roles = relationship("Hierarchy", foreign_keys="[Hierarchy.sub_id]", back_populates="subordinate")
+    supervisor_roles = relationship("Hierarchy", foreign_keys="[Hierarchy.super_id]", back_populates="supervisor")
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -41,18 +59,25 @@ class User(Base):
         }
 
 
-class RecruitersDirectors(Base):
-    __tablename__ = "list_recruiters"
-
+class Hierarchy(Base):
+    __tablename__ = "hierarchies"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    director_username = Column(String, ForeignKey('users.username'), nullable=False)
-    recruiter_username = Column(String, ForeignKey('users.username'), nullable=False)
-  
-    recruiters = relationship("User", back_populates="users")
-    
+    sub_id = Column(String, ForeignKey('users.username'), nullable=False)
+    super_id = Column(String, ForeignKey('users.username'), nullable=False)
 
-class Response(Base):
-    __tablename__ = "responses"
+    subordinate = relationship("User", foreign_keys=[sub_id], back_populates="supervisor_roles")
+    supervisor = relationship("User", foreign_keys=[super_id], back_populates="subordinate_roles")
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "id": self.id,
+            "sub_id": self.sub_id,
+            "super_id": self.super_id,
+        }
+
+
+class Candidate(Base):
+    __tablename__ = "candidates"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     first_name = Column(String, nullable=False)
@@ -61,11 +86,19 @@ class Response(Base):
     phone = Column(String, nullable=False)
     email = Column(String, nullable=False)
     city = Column(String, nullable=False)
-    vacancy_id = Column(Integer, ForeignKey('vacancies.id'), nullable=False)
+    vacancy_id = Column(Integer, ForeignKey("vacancies.id"), nullable=False)
     resume_file = Column(String, nullable=False)
-    created_at = Column(TIMESTAMP, nullable=False, unique=False, default=datetime.now)
+    created_at = Column(TIMESTAMP, nullable=False, default=datetime.now)
+    updated_at = Column(TIMESTAMP, nullable=False, default=datetime.now)
+    recruiter_description = Column(String, nullable=True)
+    status = Column(
+        PgEnum(CandidateStatus, name="candidate_status", create_type=False),
+        nullable=False,
+        default=CandidateStatus.expected,
+    )
 
-    vacancy = relationship("Vacancies", back_populates="requests")
+    vacancy = relationship("Vacancy", back_populates="candidates")
+    interviews = relationship("Interview", back_populates="candidate")
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -77,7 +110,10 @@ class Response(Base):
             "city": self.city,
             "vacancy_id": self.vacancy_id,
             "resume_file": self.resume_file,
-            "created_at": self.created_at
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+            "recruiter_description": self.recruiter_description,
+            "status": self.status,
         }
 
 
@@ -88,10 +124,12 @@ class Vacancy(Base):
     title = Column(String, nullable=False)
     description = Column(String, nullable=False)
     location = Column(String, nullable=False)
-    recruiter_username = Column(Integer, ForeignKey('users.id'), nullable=False)
-    created_at = Column(TIMESTAMP, nullable=False, unique=False, default=datetime.now)
+    creator_username = Column(String, ForeignKey("users.username"), nullable=False)
+    created_at = Column(TIMESTAMP, nullable=False, default=datetime.now)
+    status = Column(Boolean, nullable=False)
 
-    users = relationship("User", back_populates="users")
+    recruiter = relationship("User", back_populates="vacancies")
+    candidates = relationship("Candidate", back_populates="vacancy")
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -99,47 +137,57 @@ class Vacancy(Base):
             "title": self.title,
             "description": self.description,
             "location": self.location,
-            "recruiter_id": self.recruiter_id,
-            "created_at": self.created_at
+            "creator_username": self.creator_username,
+            "created_at": self.created_at,
+            "status": self.status,
         }
 
 
 class Task(Base):
     __tablename__ = "tasks"
     id = Column(Integer, primary_key=True, autoincrement=True)
+    title = Column(String, nullable=False)
     description = Column(String, nullable=False)
-    status = Column(String, nullable=False)
-    recruiter_id = Column(Integer, ForeignKey('users.id'), nullable=False)
-    created_at = Column(TIMESTAMP, nullable=False, unique=False, default=datetime.now)
+    status = Column(Boolean, nullable=False, default=False)
+    task_creator = Column(String, ForeignKey("users.username"), nullable=False)
+    task_receiver = Column(String, ForeignKey("users.username"), nullable=False)
+    created_at = Column(TIMESTAMP, nullable=False, default=datetime.now)
+    updated_at = Column(TIMESTAMP, nullable=False, default=datetime.now)
 
-    users = relationship("User", back_populates="users")
-    
+    creator = relationship(
+        "User", back_populates="tasks_creator", foreign_keys=[task_creator]
+    )
+    receiver = relationship(
+        "User", back_populates="tasks_receiver", foreign_keys=[task_receiver]
+    )
+
     def to_dict(self) -> dict[str, Any]:
         return {
             "id": self.id,
+            "title": self.title,
             "description": self.description,
             "status": self.status,
-            "recruiter_id": self.recruiter_id,
-            "created_at": self.created_at
+            "task_creator": self.task_creator,
+            "task_receiver": self.task_receiver,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
         }
 
 
 class Interview(Base):
     __tablename__ = "interviews"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    recruiter_id = Column(Integer, ForeignKey('users.id'), nullable=False)
-    response_id = Column(Integer, ForeignKey('responses.id'), nullable=False)
-    date = Column(DATE, nullable=False)
-    time = Column(TIMESTAMP, nullable=False)
-    
-    users = relationship("User", back_populates="users")
-    requests = relationship("Response", back_populates="responses")
-    
+    recruiter_username = Column(String, ForeignKey("users.username"), nullable=False)
+    candidate_id = Column(Integer, ForeignKey("candidates.id"), nullable=False)
+    datetime = Column(TIMESTAMP, nullable=False)
+
+    recruiter = relationship("User", back_populates="interviews")
+    candidate = relationship("Candidate", back_populates="interviews")
+
     def to_dict(self) -> dict[str, Any]:
         return {
             "id": self.id,
-            "recruiter_id": self.recruiter_id,
-            "response_id": self.response_id,
-            "date": self.date,
-            "time": self.time
+            "recruiter_username": self.recruiter_username,
+            "candidate_id": self.candidate_id,
+            "datetime": self.datetime,
         }

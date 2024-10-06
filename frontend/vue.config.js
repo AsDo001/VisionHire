@@ -16,6 +16,10 @@ module.exports = defineConfig({
 		target: process.env.API_URL,
 		changeOrigin: true,
 	  },
+	  '^/admin': {
+		target: process.env.API_URL,
+		changeOrigin: true,
+	  },
 	}
   }
 })

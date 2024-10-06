@@ -1,29 +1,34 @@
 <template>
-  <div class="modal" v-if="visible" @click.self="closeModal">
+  <div class="modal" v-if="isVisible" @click.self="close">
     <div class="modal__content">
       <slot></slot>
-      <button class="modal__close-btn" @click="closeModal"><Cancel /></button>
+      <button class="modal__close-btn" @click="close"><Cancel /></button>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref, defineEmits, defineProps, watch } from 'vue';
 import Cancel from "@/assets/svg/Cancel.vue";
-import { ref } from "vue";
-const emit = defineEmits(["close"]);
-const visible = ref(false);
+const props = defineProps({
+  modelValue: {
+    type: Boolean,
+    default: false,
+  },
+});
 
-const openModal = () => {
-  visible.value = true;
+const emit = defineEmits(['update:modelValue']);
+
+const isVisible = ref(props.modelValue);
+
+const close = () => {
+  isVisible.value = false;
+  emit('update:modelValue', isVisible.value);
 };
 
-const closeModal = () => {
-  visible.value = false;
-  emit("close");
-};
 
-defineExpose({
-  openModal,
+watch(() => props.modelValue, (newValue) => {
+  isVisible.value = newValue;
 });
 </script>
 
@@ -57,7 +62,7 @@ defineExpose({
     justify-content: center;
     align-content: center;
     border-radius: 100px;
-    padding: 12px 0;
+    padding: 12.5px 0;
     width: 50px;
     height: 50px;
     border: none;

@@ -5,7 +5,10 @@ import Logo from "@/assets/svg/Logo.vue";
 
 <template>
   <footer>
-    <div class="logo"><Copyright /><span>2024 · </span> <Logo /></div>
+    <div class="logo">
+      <Copyright /><span>2024 · </span>
+      <Logo />
+    </div>
     <div class="links">
       <a>Terms of Use</a>
       <a>Privacy Policy</a>
@@ -20,11 +23,11 @@ footer {
   display: flex;
   border-radius: 10px 10px 0 0;
   height: 60px;
-
-  margin: auto 0;
-  background: var(--gradient);
+  width: 100%;
+  background: var(--lavander);
   padding: 0 20px;
   justify-content: space-between;
+
   .logo {
     display: flex;
     color: white;
@@ -32,14 +35,15 @@ footer {
     font-size: 20px;
     align-items: center;
   }
+
   .links {
     display: flex;
     gap: 20px;
     align-items: center;
-    a{
-        color: white;
-        text-decoration: underline;
-        cursor: pointer;
+
+    a {
+      color: white;
+      cursor: pointer;
     }
   }
 }

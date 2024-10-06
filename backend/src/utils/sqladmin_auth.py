@@ -1,5 +1,3 @@
-import traceback
-
 from loguru import logger
 from sqladmin.authentication import AuthenticationBackend
 from starlette.requests import Request
@@ -8,6 +6,7 @@ from starlette.responses import RedirectResponse
 from src.database.crud import CRUD
 from src.database.models import Role
 from src.utils.oauth2_utils import OAuth2Utils
+import src.config as cfg
 
 
 # TODO: Изменить логику аутентификации. Сделать через refresh токен.
@@ -21,16 +20,14 @@ class AdminAuth(AuthenticationBackend):
         form = await request.form()
         username, password = form["username"], form["password"]
 
-        user = await self.oauth2.validate_user(username, password)
+        if username != cfg.ADMIN_LOGIN or password != cfg.ADMIN_PASSWORD:
+            logger.error(f"Invalid admin credentials: {username}:{password}")
+            return False
 
-        if user and user.role == Role.admin:
-            access_token = await self.oauth2.create_access_token(
-                {"username": str(user.username)}
-            )
-            request.session.update({"token": access_token})
-            return True
-
-        return False
+        access_token = await self.oauth2.create_access_token({"username": username})
+        request.session.update({"token": access_token})
+        logger.info(f"Admin logged in: {username}")
+        return True
 
     async def logout(self, request: Request) -> bool:
         request.session.clear()
@@ -44,9 +41,9 @@ class AdminAuth(AuthenticationBackend):
 
         try:
             check_auth = self.oauth2.check_auth_token(token)
+            logger.info(f"Admin authenticated: {check_auth}")
             if "username" in check_auth:
-                user = await self.db.get_user_by_username(check_auth["username"])
-                if user.role == Role.admin:
+                if check_auth["username"] == cfg.ADMIN_LOGIN:
                     return True
 
             return RedirectResponse(request.url_for("admin:login"), status_code=302)
